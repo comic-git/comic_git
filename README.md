@@ -2,7 +2,7 @@
 
 # comic_git
 
-A statically-hosted web comic server core intended to be hosted on github.io
+A static-site webcomic generator designed for GitHub Pages.
 
 To see an example of how a webpage looks, go to https://www.comic-git.com
 

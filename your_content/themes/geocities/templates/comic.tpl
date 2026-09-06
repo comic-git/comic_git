@@ -4,12 +4,14 @@
     <link rel="next" href="{{ comic_base_dir }}/comic/{{ next_id }}/">
 {%- endblock %}
 {%- block content %}
-    <div id="comic-page">
-        <a href="{{ comic_base_dir }}/comic/{{ next_id }}/#comic-page">
-            {%- for comic_path in comic_paths %}
-            <img class="comic-image" src="{{ base_dir }}/{{ comic_path }}" title="{{ escaped_alt_text }}"/>
-            {%- endfor %}
-        </a>
+    <div class="comic-page">
+        {%- for image in images %}
+        <div class="comic-image-container" id="comic-image-{{ loop.index }}">
+            <a href="{{ comic_base_dir }}/comic/{{ next_id }}/#{{ next_anchor }}">
+                <img class="comic-image" src="{{ base_dir }}/{{ image.web_path | e }}" alt="{{ image.alt_text | e }}"/>
+            </a>
+        </div>
+        {%- endfor %}
     </div>
 
     <div id="navigation-bar">
@@ -17,16 +19,16 @@
         <a class="navigation-button-disabled">‹‹ First</a>
         <a class="navigation-button-disabled">‹ Previous</a>
     {% else %}
-        <a class="navigation-button" href="{{ comic_base_dir }}/comic/{{ first_id }}/#comic-page">‹‹ First</a>
-        <a class="navigation-button" href="{{ comic_base_dir }}/comic/{{ previous_id }}/#comic-page">‹ Previous</a>
+        <a class="navigation-button" href="{{ comic_base_dir }}/comic/{{ first_id }}/#{{ first_anchor }}">‹‹ First</a>
+        <a class="navigation-button" href="{{ comic_base_dir }}/comic/{{ previous_id }}/#{{ previous_anchor }}">‹ Previous</a>
     {% endif %}
     {# The block below is the same as the one above, except it checks if you're on the last page. #}
     {% if last_id == current_id %}
         <a class="navigation-button-disabled">Next ›</a>
         <a class="navigation-button-disabled">Last ››</a>
     {% else %}
-        <a class="navigation-button" href="{{ comic_base_dir }}/comic/{{ next_id }}/#comic-page">Next ›</a>
-        <a class="navigation-button" href="{{ comic_base_dir }}/latest/#comic-page">Last ››</a>
+        <a class="navigation-button" href="{{ comic_base_dir }}/comic/{{ next_id }}/#{{ next_anchor }}">Next ›</a>
+        <a class="navigation-button" href="{{ comic_base_dir }}/comic/{{ last_id }}/#{{ last_anchor }}">Last ››</a>
     {% endif %}
     </div>
 
@@ -36,7 +38,7 @@
         <div id="storyline">
             {# `| replace(" ", "-")` takes the value in the variable, in this case `storyline`, and replaces all
                spaces with hyphens. This is important when building links to other parts of the site. #}
-            Storyline: <a href="{{ comic_base_dir }}/archive/#{{ _storyline | replace(' ', '-') }}">{{ _storyline }}</a>
+            Storyline: <a href="{{ comic_base_dir }}/archive/#archive-section-{{ _storyline | replace(' ', '-') }}">{{ _storyline }}</a>
         </div>
     {%- endif %}
     {%- if _characters %}
@@ -69,8 +71,8 @@
 {%- block script %}
 {% if transcripts %}
 <script type="module">
-    import { init } from "{{ base_dir }}/comic_git_engine/js/transcript.js";
-    init();
+    import { init_transcript } from "{{ base_dir }}/comic_git_engine/js/transcript.js";
+    init_transcript();
 </script>
 {% endif %}
 {%- endblock %}

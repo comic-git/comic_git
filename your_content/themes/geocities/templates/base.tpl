@@ -3,7 +3,7 @@
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
     {%- if google_analytics_id %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Google tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
